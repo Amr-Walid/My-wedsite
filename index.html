@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بحككككك يا نوريي</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap' );
-        @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap' );
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap'  );
+        @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap'  );
 
         :root {
             --primary-color: #f8cdda;
@@ -245,14 +245,16 @@
     </style>
 </head>
 <body>
-    <audio id="background-music" loop>
-        <source src="https://github.com/rafaelreis-hotmart/Audio-Sample-files/raw/main/Ed-Sheeran-Perfect.mp3" type="audio/mpeg">
-    </audio>
+    <!-- تشغيل أغنية Perfect من داخل المشروع -->
+<audio id="background-music" preload="auto" loop>
+  <source src="./music/ed-sheeran-perfect.mp3" type="audio/mpeg">
+  متصفحك لا يدعم تشغيل الصوت.
+</audio>
 
     <div class="welcome-container" id="welcomeContainer">
         <div class="welcome-step" id="step1">
             <h2>هل أنتِ نورا؟</h2>
-            <button onclick="showNextStep( )">نعم، أنا هي!</button>
+            <button onclick="showNextStep(  )">نعم، أنا هي!</button>
         </div>
         <div class="welcome-step hidden-step" id="step2">
             <h2>اكتبي اسم حبيبك للتأكيد الي هو اناااا</h2>
@@ -273,17 +275,11 @@
             <p id="message-text"></p>
         </div>
 
-        <!-- ======================================================= -->
-        <!-- ==== تم تحديث معرض الصور هنا =========================== -->
-        <!-- ======================================================= -->
         <div class="gallery">
            <img src="./images/WhatsApp Image 2025-10-22 at 16.36.42_4a249a02.jpg" alt="ايوا يا سبايدرمان">
-            <img src="./images/WhatsApp Image 2025-10-22 at 16.36.42_b7c05846.jpg"" alt="دي لا مش اول وردة😅">
-            <img src="./images/WhatsApp Image 2025-10-22 at 16.36.42_e40266c4.jpg"" alt="اول مره مسكت ايدك">
+            <img src="./images/WhatsApp Image 2025-10-22 at 16.36.42_b7c05846.jpg" alt="دي لا مش اول وردة😅">
+            <img src="./images/WhatsApp Image 2025-10-22 at 16.36.42_e40266c4.jpg" alt="اول مره مسكت ايدك">
         </div>
-        <!-- ======================================================= -->
-        <!-- ==== نهاية معرض الصور ================================== -->
-        <!-- ======================================================= -->
     </div>
 
     <script>
@@ -299,6 +295,7 @@
         function checkName() {
             const nameInput = document.getElementById('nameInput').value.trim();
             const errorMessage = document.getElementById('error-message');
+            // تحويل الاسم المدخل والعربي إلى حالة موحدة للمقارنة
             if (nameInput.toLowerCase() === 'عمرو' || nameInput.toLowerCase() === 'amro' || nameInput.toLowerCase() === 'amr') {
                 errorMessage.textContent = '';
                 startCelebration();
@@ -306,21 +303,27 @@
                 errorMessage.textContent = 'الاسم غير صحيح، حاولي مرة أخرى!';
             }
         }
-        
         function startCelebration() {
-            const welcomeContainer = document.getElementById('welcomeContainer');
-            const mainContent = document.getElementById('mainContent');
-            const music = document.getElementById('background-music');
+    const welcomeContainer = document.getElementById('welcomeContainer');
+    const mainContent = document.getElementById('mainContent');
+    const music = document.getElementById('background-music');
 
-            welcomeContainer.style.opacity = '0';
-            welcomeContainer.style.pointerEvents = 'none';
-            
-            music.play().catch(e => console.log("Play failed. User interaction needed."));
+    welcomeContainer.style.opacity = '0';
+    welcomeContainer.style.pointerEvents = 'none';
 
-            mainContent.classList.remove('hidden');
-            createBalloons(25);
-            typeWriter('message-text', messageContent, 50);
-        }
+    // محاولة تشغيل الموسيقى بعد تفاعل المستخدم
+    music.play().catch(e => {
+        console.log("Play failed. User interaction needed.");
+        // كحل بديل لو المتصفح منع التشغيل التلقائي
+        document.body.addEventListener('click', () => music.play(), { once: true });
+    });
+
+    mainContent.classList.remove('hidden');
+    createBalloons(25);
+    typeWriter('message-text', messageContent, 50);
+}
+
+        
 
         function typeWriter(elementId, text, speed) {
             let i = 0;
